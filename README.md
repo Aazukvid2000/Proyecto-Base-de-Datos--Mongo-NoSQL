@@ -368,10 +368,10 @@ Este proyecto demuestra:
 
 ---
 
-**Desarrollado por**: [Tu Nombre]  
-**Universidad**: [Tu Universidad]  
-**Materia**: [Nombre de la Materia]  
-**Fecha**: [Fecha actual]
+**Desarrollado por**: [Sinuhé Vidals Sibaja]  
+**Universidad**: [Universidad Tecnológica de la Mixteca]  
+**Materia**: [Base de Datos]  
+**Fecha**: [28 de Junio del 2025]
 
 ---
 
