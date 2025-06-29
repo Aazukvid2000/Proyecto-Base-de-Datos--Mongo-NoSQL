@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador - Cafetería El Rincón Mexicano (MongoDB)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .db-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .search-section {
+            padding: 40px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .search-button:active {
+            transform: translateY(0);
+        }
+
+        .results-section {
+            padding: 40px;
+            min-height: 400px;
+        }
+
+        .results-info {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .results-info h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-top: 60px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .results-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        .results-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .results-table tr:hover {
+            background: #f8f9fa;
+            transition: background 0.3s ease;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tipo-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tipo-producto {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .tipo-postre {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .disponible-si {
+            color: #4caf50;
+            font-weight: 600;
+        }
+
+        .disponible-no {
+            color: #f44336;
+            font-weight: 600;
+        }
+
+        .categoria-badge {
+            background: #f5f5f5;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .precio {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .mongo-info {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
+            .results-table {
+                font-size: 0.9em;
+            }
+
+            .results-table th,
+            .results-table td {
+                padding: 10px 5px;
+            }
+
+            .container {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Buscador de Productos</h1>
+            <p>Cafetería El Rincón Mexicano</p>
+            <div class="db-badge">🍃 MongoDB NoSQL</div>
+        </div>
+
+        <div class="search-section">
+            <div class="mongo-info">
+                📊 Búsqueda avanzada en base de datos NoSQL MongoDB - Puerto 8090 - Resultados en tiempo real
+            </div>
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Buscar por nombre, descripción o categoría..."
+                    autofocus
+                >
+                <button onclick="buscar()" class="search-button">Buscar</button>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div class="results-info">
+                <h2>Ingresa un término de búsqueda</h2>
+                <p>Puedes buscar por: Taco, Flan, Postres, Fresa, Chocolate, Pastel, etc.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URL base de la API MongoDB
+        const API_URL = 'http://localhost:8090';
+
+        // Permitir búsqueda con Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                buscar();
+            }
+        });
+
+        async function buscar() {
+            const termino = document.getElementById('searchInput').value.trim();
+            const resultsSection = document.getElementById('resultsSection');
+
+            if (!termino) {
+                resultsSection.innerHTML = `
+                    <div class="error-message">
+                        Por favor, ingresa un término de búsqueda
+                    </div>
+                `;
+                return;
+            }
+
+            // Mostrar loading
+            resultsSection.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Buscando en MongoDB...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${API_URL}/buscar/${encodeURIComponent(termino)}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                mostrarResultados(data);
+
+            } catch (error) {
+                console.error('Error en la búsqueda:', error);
+                resultsSection.innerHTML = `
+                    <div class="error-message">
+                        Error al realizar la búsqueda: ${error.message}
+                        <br><small>Verifica que la API de MongoDB esté ejecutándose en el puerto 8090</small>
+                    </div>
+                `;
+            }
+        }
+
+        function mostrarResultados(data) {
+            const resultsSection = document.getElementById('resultsSection');
+            
+            if (data.total_resultados === 0) {
+                resultsSection.innerHTML = `
+                    <div class="results-info">
+                        <h2>No se encontraron resultados</h2>
+                        <p>No se encontraron productos o postres que coincidan con "${data.termino_busqueda}"</p>
+                    </div>
+                    <div class="no-results">
+                        💔 Intenta con otro término de búsqueda
+                    </div>
+                `;
+                return;
+            }
+
+            // Combinar todos los resultados
+            const todosResultados = [];
+
+            // Agregar productos
+            data.productos.forEach(producto => {
+                todosResultados.push({
+                    tipo: 'Producto',
+                    id: producto.id,
+                    nombre: producto.nombre,
+                    descripcion: producto.descripcion,
+                    categoria: producto.categoria,
+                    precio: producto.precio,
+                    disponible: producto.disponible,
+                    detalles: `Precio: ${producto.precio}`
+                });
+            });
+
+            // Agregar postres
+            data.postres.forEach(postre => {
+                todosResultados.push({
+                    tipo: 'Postre',
+                    id: postre.id,
+                    nombre: postre.nombre,
+                    descripcion: postre.descripcion,
+                    categoria: postre.categoria,
+                    precio: postre.precio_total,
+                    disponible: postre.disponible,
+                    detalles: `${postre.rebanadas} rebanadas - ${postre.precio_rebanada}/reb - Total: ${postre.precio_total}`
+                });
+            });
+
+            // Generar tabla HTML
+            let tableHTML = `
+                <div class="results-info">
+                    <h2>Se encontraron ${data.total_resultados} resultado(s)</h2>
+                    <p>Búsqueda: "${data.termino_busqueda}" en MongoDB</p>
+                </div>
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Categoría</th>
+                            <th>Detalles y Precio</th>
+                            <th>Disponible</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            todosResultados.forEach(item => {
+                const tipoClass = item.tipo === 'Producto' ? 'tipo-producto' : 'tipo-postre';
+                const disponibleClass = item.disponible === 'Sí' ? 'disponible-si' : 'disponible-no';
+
+                tableHTML += `
+                    <tr>
+                        <td>
+                            <span class="tipo-badge ${tipoClass}">${item.tipo}</span>
+                        </td>
+                        <td><strong>${item.nombre}</strong></td>
+                        <td>${item.descripcion}</td>
+                        <td>
+                            <span class="categoria-badge">${item.categoria}</span>
+                        </td>
+                        <td>
+                            <span class="precio">${item.detalles}</span>
+                        </td>
+                        <td>
+                            <span class="${disponibleClass}">${item.disponible}</span>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            resultsSection.innerHTML = tableHTML;
+        }
+
+        // Función para verificar la conexión a la API
+        async function verificarConexion() {
+            try {
+                const response = await fetch(`${API_URL}/`);
+                if (response.ok) {
+                    console.log('✅ Conexión exitosa con la API MongoDB');
+                } else {
+                    console.warn('⚠️ API MongoDB respondió con estado:', response.status);
+                }
+            } catch (error) {
+                console.error('❌ No se pudo conectar con la API MongoDB:', error);
+            }
+        }
+
+        // Verificar conexión al cargar la página
+        document.addEventListener('DOMContentLoaded', verificarConexion);
+    </script>
+</body>
+</html>
