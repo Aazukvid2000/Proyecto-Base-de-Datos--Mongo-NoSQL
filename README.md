@@ -368,7 +368,7 @@ Este proyecto demuestra:
 
 ---
 
-**Desarrollado por**: [Sinuhé Vidals Sibaja]  
+**Desarrollado por**: [Sinuhé Vidals Sibaja y Samantha Betanzo Bolaños]  
 **Universidad**: [Universidad Tecnológica de la Mixteca]  
 **Materia**: [Base de Datos]  
 **Fecha**: [28 de Junio del 2025]
