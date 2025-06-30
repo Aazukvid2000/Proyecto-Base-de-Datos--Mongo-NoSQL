@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -63,7 +63,7 @@
         .search-container {
             display: flex;
             gap: 15px;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
@@ -82,7 +82,7 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .search-button {
+        .search-button, .create-button {
             padding: 15px 30px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -95,12 +95,21 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
-        .search-button:hover {
+        .create-button {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .search-button:hover, .create-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .search-button:active {
+        .create-button:hover {
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .search-button:active, .create-button:active {
             transform: translateY(0);
         }
 
@@ -139,17 +148,18 @@
         .results-table th {
             background: #667eea;
             color: white;
-            padding: 15px;
+            padding: 15px 10px;
             text-align: left;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.9em;
+            font-size: 0.85em;
             letter-spacing: 0.5px;
         }
 
         .results-table td {
-            padding: 15px;
+            padding: 15px 10px;
             border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
         }
 
         .results-table tr:hover {
@@ -201,7 +211,7 @@
         .precio {
             font-weight: 600;
             color: #333;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .loading {
@@ -234,6 +244,15 @@
             text-align: center;
         }
 
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
         .mongo-info {
             background: #e8f5e8;
             color: #2e7d32;
@@ -242,6 +261,178 @@
             margin: 15px 0;
             font-size: 0.9em;
             text-align: center;
+        }
+
+        /* Estilos para botones de acción */
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-edit:hover {
+            background: #ffb300;
+            transform: translateY(-1px);
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        /* Estilos para modales */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-modal {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .create-section {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
         }
 
         @media (max-width: 768px) {
@@ -253,21 +444,35 @@
                 flex-direction: column;
             }
 
-            .search-button {
+            .search-button, .create-button {
                 width: 100%;
             }
 
             .results-table {
-                font-size: 0.9em;
+                font-size: 0.8em;
             }
 
             .results-table th,
             .results-table td {
-                padding: 10px 5px;
+                padding: 8px 5px;
             }
 
             .container {
                 border-radius: 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-action {
+                width: 100%;
+                margin-bottom: 2px;
             }
         }
     </style>
@@ -294,6 +499,11 @@
                 >
                 <button onclick="buscar()" class="search-button">Buscar</button>
             </div>
+            
+            <div class="create-section">
+                <button onclick="abrirModalCrear('producto')" class="create-button">➕ Crear Producto</button>
+                <button onclick="abrirModalCrear('postre')" class="create-button">🍰 Crear Postre</button>
+            </div>
         </div>
 
         <div class="results-section" id="resultsSection">
@@ -304,9 +514,89 @@
         </div>
     </div>
 
+    <!-- Modal para Crear/Editar -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Crear Producto</h2>
+                <button class="close" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="itemForm">
+                    <div class="form-group">
+                        <label class="form-label" for="nombre">Nombre *</label>
+                        <input type="text" id="nombre" class="form-input" required maxlength="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="descripcion">Descripción *</label>
+                        <textarea id="descripcion" class="form-textarea" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="categoria">Categoría *</label>
+                        <select id="categoria" class="form-select" required>
+                            <option value="">Seleccionar categoría</option>
+                            <option value="torta">Torta</option>
+                            <option value="cuernito">Cuernito</option>
+                            <option value="quesadilla">Quesadilla</option>
+                            <option value="taco">Taco</option>
+                            <option value="baguette">Baguette</option>
+                            <option value="bebida">Bebida</option>
+                            <option value="postre">Postre</option>
+                            <option value="pastel">Pastel</option>
+                            <option value="postre_frio">Postre Frío</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Campos específicos para productos -->
+                    <div id="productFields" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label" for="precio">Precio * ($)</label>
+                            <input type="number" id="precio" class="form-input" step="0.01" min="0">
+                        </div>
+                    </div>
+                    
+                    <!-- Campos específicos para postres -->
+                    <div id="postFields" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label" for="rebanadas">Número de Rebanadas *</label>
+                            <input type="number" id="rebanadas" class="form-input" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="precioRebanada">Precio por Rebanada * ($)</label>
+                            <input type="number" id="precioRebanada" class="form-input" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="precioTotal">Precio Total * ($)</label>
+                            <input type="number" id="precioTotal" class="form-input" step="0.01" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="disponible">Disponible *</label>
+                        <select id="disponible" class="form-select" required>
+                            <option value="1">Sí</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                <button type="button" class="btn-modal btn-primary" onclick="guardarItem()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // URL base de la API MongoDB
         const API_URL = 'http://localhost:8090';
+        
+        // Variables globales
+        let currentItemType = 'producto';
+        let editingItemId = null;
+        let isEditing = false;
 
         // Permitir búsqueda con Enter
         document.getElementById('searchInput').addEventListener('keypress', function(event) {
@@ -314,6 +604,17 @@
                 buscar();
             }
         });
+
+        // Auto-calcular precio total en postres
+        document.getElementById('rebanadas').addEventListener('input', calcularPrecioTotal);
+        document.getElementById('precioRebanada').addEventListener('input', calcularPrecioTotal);
+
+        function calcularPrecioTotal() {
+            const rebanadas = parseFloat(document.getElementById('rebanadas').value) || 0;
+            const precioRebanada = parseFloat(document.getElementById('precioRebanada').value) || 0;
+            const precioTotal = rebanadas * precioRebanada;
+            document.getElementById('precioTotal').value = precioTotal.toFixed(2);
+        }
 
         async function buscar() {
             const termino = document.getElementById('searchInput').value.trim();
@@ -380,6 +681,7 @@
             data.productos.forEach(producto => {
                 todosResultados.push({
                     tipo: 'Producto',
+                    tipoApi: 'producto',
                     id: producto.id,
                     nombre: producto.nombre,
                     descripcion: producto.descripcion,
@@ -394,13 +696,17 @@
             data.postres.forEach(postre => {
                 todosResultados.push({
                     tipo: 'Postre',
+                    tipoApi: 'postre',
                     id: postre.id,
                     nombre: postre.nombre,
                     descripcion: postre.descripcion,
                     categoria: postre.categoria,
                     precio: postre.precio_total,
                     disponible: postre.disponible,
-                    detalles: `${postre.rebanadas} rebanadas - ${postre.precio_rebanada}/reb - Total: ${postre.precio_total}`
+                    detalles: `${postre.rebanadas} rebanadas - ${postre.precio_rebanada}/reb - Total: ${postre.precio_total}`,
+                    rebanadas: postre.rebanadas,
+                    precio_rebanada: postre.precio_rebanada,
+                    precio_total: postre.precio_total
                 });
             });
 
@@ -419,6 +725,7 @@
                             <th>Categoría</th>
                             <th>Detalles y Precio</th>
                             <th>Disponible</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -444,6 +751,16 @@
                         <td>
                             <span class="${disponibleClass}">${item.disponible}</span>
                         </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-action btn-edit" onclick="editarItem('${item.tipoApi}', ${item.id})">
+                                    ✏️ Editar
+                                </button>
+                                <button class="btn-action btn-delete" onclick="eliminarItem('${item.tipoApi}', ${item.id}, '${item.nombre}')">
+                                    🗑️ Eliminar
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 `;
             });
@@ -454,6 +771,195 @@
             `;
 
             resultsSection.innerHTML = tableHTML;
+        }
+
+        // Funciones para el modal
+        function abrirModalCrear(tipo) {
+            currentItemType = tipo;
+            isEditing = false;
+            editingItemId = null;
+            
+            document.getElementById('modalTitle').textContent = tipo === 'producto' ? 'Crear Producto' : 'Crear Postre';
+            
+            // Mostrar/ocultar campos según el tipo
+            document.getElementById('productFields').style.display = tipo === 'producto' ? 'block' : 'none';
+            document.getElementById('postFields').style.display = tipo === 'postre' ? 'block' : 'none';
+            
+            // Limpiar formulario
+            document.getElementById('itemForm').reset();
+            
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        async function editarItem(tipo, id) {
+            currentItemType = tipo;
+            isEditing = true;
+            editingItemId = id;
+            
+            document.getElementById('modalTitle').textContent = tipo === 'producto' ? 'Editar Producto' : 'Editar Postre';
+            
+            // Mostrar/ocultar campos según el tipo
+            document.getElementById('productFields').style.display = tipo === 'producto' ? 'block' : 'none';
+            document.getElementById('postFields').style.display = tipo === 'postre' ? 'block' : 'none';
+            
+            try {
+                const response = await fetch(`${API_URL}/${tipo}s/${id}`);
+                if (!response.ok) throw new Error('Error al cargar el elemento');
+                
+                const item = await response.json();
+                
+                // Llenar formulario con datos existentes
+                document.getElementById('nombre').value = item.nombre;
+                document.getElementById('descripcion').value = item.descripcion;
+                document.getElementById('categoria').value = item.categoria;
+                document.getElementById('disponible').value = item.disponible;
+                
+                if (tipo === 'producto') {
+                    document.getElementById('precio').value = item.precio;
+                } else {
+                    document.getElementById('rebanadas').value = item.rebanadas;
+                    document.getElementById('precioRebanada').value = item.precio_rebanada;
+                    document.getElementById('precioTotal').value = item.precio_total;
+                }
+                
+                document.getElementById('modal').style.display = 'block';
+                
+            } catch (error) {
+                mostrarMensaje('Error al cargar los datos del elemento', 'error');
+            }
+        }
+
+        async function eliminarItem(tipo, id, nombre) {
+            if (!confirm(`¿Estás seguro de que quieres eliminar "${nombre}"?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/${tipo}s/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) throw new Error('Error al eliminar');
+                
+                mostrarMensaje(`"${nombre}" eliminado correctamente`, 'success');
+                
+                // Recargar búsqueda si hay término
+                const termino = document.getElementById('searchInput').value.trim();
+                if (termino) {
+                    setTimeout(() => buscar(), 1000);
+                }
+                
+            } catch (error) {
+                mostrarMensaje('Error al eliminar el elemento', 'error');
+            }
+        }
+
+        async function guardarItem() {
+            try {
+                // Recoger datos del formulario
+                const formData = {
+                    nombre: document.getElementById('nombre').value.trim(),
+                    descripcion: document.getElementById('descripcion').value.trim(),
+                    categoria: document.getElementById('categoria').value,
+                    disponible: parseInt(document.getElementById('disponible').value)
+                };
+
+                // Validar campos básicos
+                if (!formData.nombre || !formData.descripcion || !formData.categoria) {
+                    throw new Error('Por favor, completa todos los campos obligatorios');
+                }
+
+                // Agregar campos específicos según el tipo
+                if (currentItemType === 'producto') {
+                    const precio = parseFloat(document.getElementById('precio').value);
+                    if (!precio || precio <= 0) {
+                        throw new Error('El precio debe ser mayor a 0');
+                    }
+                    formData.precio = precio;
+                } else {
+                    const rebanadas = parseInt(document.getElementById('rebanadas').value);
+                    const precioRebanada = parseFloat(document.getElementById('precioRebanada').value);
+                    const precioTotal = parseFloat(document.getElementById('precioTotal').value);
+                    
+                    if (!rebanadas || rebanadas <= 0) {
+                        throw new Error('El número de rebanadas debe ser mayor a 0');
+                    }
+                    if (!precioRebanada || precioRebanada <= 0) {
+                        throw new Error('El precio por rebanada debe ser mayor a 0');
+                    }
+                    if (!precioTotal || precioTotal <= 0) {
+                        throw new Error('El precio total debe ser mayor a 0');
+                    }
+                    
+                    formData.rebanadas = rebanadas;
+                    formData.precio_rebanada = precioRebanada;
+                    formData.precio_total = precioTotal;
+                }
+
+                // Determinar método y URL
+                const method = isEditing ? 'PUT' : 'POST';
+                const url = isEditing 
+                    ? `${API_URL}/${currentItemType}s/${editingItemId}`
+                    : `${API_URL}/${currentItemType}s/`;
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Error al guardar');
+                }
+
+                const action = isEditing ? 'actualizado' : 'creado';
+                mostrarMensaje(`${currentItemType} "${formData.nombre}" ${action} correctamente`, 'success');
+                
+                cerrarModal();
+                
+                // Recargar búsqueda si hay término
+                const termino = document.getElementById('searchInput').value.trim();
+                if (termino) {
+                    setTimeout(() => buscar(), 1000);
+                }
+
+            } catch (error) {
+                mostrarMensaje(error.message, 'error');
+            }
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('itemForm').reset();
+            isEditing = false;
+            editingItemId = null;
+        }
+
+        function mostrarMensaje(mensaje, tipo) {
+            const resultsSection = document.getElementById('resultsSection');
+            const messageClass = tipo === 'success' ? 'success-message' : 'error-message';
+            
+            const messageHTML = `<div class="${messageClass}">${mensaje}</div>`;
+            resultsSection.insertAdjacentHTML('afterbegin', messageHTML);
+            
+            // Eliminar mensaje después de 5 segundos
+            setTimeout(() => {
+                const messageElement = resultsSection.querySelector(`.${messageClass}`);
+                if (messageElement) {
+                    messageElement.remove();
+                }
+            }, 5000);
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                cerrarModal();
+            }
         }
 
         // Función para verificar la conexión a la API
